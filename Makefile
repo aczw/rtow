@@ -11,3 +11,5 @@ run:
 
 clean:
 	rm -rf image.ppm rtow
+
+.PHONY: all run clean

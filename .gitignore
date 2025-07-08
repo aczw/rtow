@@ -1,0 +1,9 @@
+# Output images
+*.ppm
+
+# Apple
+.DS_Store
+
+
+# Builds
+rtow

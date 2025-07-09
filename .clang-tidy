@@ -1,1 +1,1 @@
-Checks: "clang-analyzer-*,cppcoreguidelines-*,bugprone-*,misc-*"
+Checks: "clang-analyzer-*,cppcoreguidelines-*,bugprone-*,misc-*,-cppcoreguidelines-pro-bounds-constant-array-index"

@@ -1,15 +1,23 @@
 CXX := clang++
 CXXFLAGS := -std=c++20 -Wall -Wextra -O2
+SRC_DIR := src
+BUILD_DIR := build
 
-all: clean build run
+SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
+TARGET := rtow
 
-build: src/main.cpp
-	$(CXX) $(CXXFLAGS) -o rtow src/main.cpp
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 run:
 	./rtow > image.ppm
 
 clean:
-	rm -rf image.ppm rtow
+	rm -rf $(BUILD_DIR) $(TARGET) image.ppm
 
-.PHONY: all run clean
+.PHONY: run clean

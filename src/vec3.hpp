@@ -44,7 +44,7 @@ Vec3 operator/(const Vec3& v1, double n);
 
 std::ostream& operator<<(std::ostream& out, const Vec3& v);
 
-/// Good for semantic meaning.
+/// Useful for semantic meaning.
 using Point3 = Vec3;
 
 }  // namespace rtow

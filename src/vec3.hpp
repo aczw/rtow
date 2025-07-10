@@ -19,6 +19,7 @@ class Vec3 {
   double z() const;
 
   double length() const;
+  Vec3 normalized() const;
 
   Vec3 operator-() const;
 
@@ -32,7 +33,7 @@ class Vec3 {
 
   static double dot(const Vec3& v1, const Vec3& v2);
   static Vec3 cross(const Vec3& v1, const Vec3& v2);
-  static Vec3 normalized(const Vec3& v);
+  static Vec3 normalize(const Vec3& v);
 };
 
 Vec3 operator+(const Vec3& v1, const Vec3& v2);

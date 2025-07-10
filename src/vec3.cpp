@@ -26,6 +26,10 @@ double Vec3::length() const {
   return std::sqrt(dot(*this, *this));
 }
 
+Vec3 Vec3::normalized() const {
+  return Vec3::normalize(*this);
+}
+
 Vec3 Vec3::operator-() const {
   return Vec3(-data[0], -data[1], -data[2]);
 }
@@ -67,12 +71,11 @@ double Vec3::dot(const Vec3& v1, const Vec3& v2) {
 }
 
 Vec3 Vec3::cross(const Vec3& v1, const Vec3& v2) {
-  return Vec3(v1.data[1] * v2.data[2] - v1.data[2] * v2.data[1],
-              v1.data[2] * v2.data[0] - v1.data[0] * v2.data[2],
+  return Vec3(v1.data[1] * v2.data[2] - v1.data[2] * v2.data[1], v1.data[2] * v2.data[0] - v1.data[0] * v2.data[2],
               v1.data[0] * v2.data[1] - v1.data[1] * v2.data[0]);
 }
 
-Vec3 Vec3::normalized(const Vec3& v) {
+Vec3 Vec3::normalize(const Vec3& v) {
   return v / v.length();
 }
 

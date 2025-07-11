@@ -18,6 +18,7 @@ class Intersection {
   Intersection(double t, const Point3& point, const Ray& ray, const Vec3& outward_normal);
 
   double get_t() const;
+  Vec3 get_normal() const;
 };
 
 }  // namespace rtow

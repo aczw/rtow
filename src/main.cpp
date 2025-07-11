@@ -1,12 +1,17 @@
 #include "color.hpp"
+#include "hittable_list.hpp"
+#include "ihittable.hpp"
+#include "intersection.hpp"
 #include "ray.hpp"
+#include "sphere.hpp"
 #include "utils.hpp"
 #include "vec3.hpp"
 
 #include <algorithm>
-#include <cmath>
 #include <format>
 #include <iostream>
+#include <limits>
+#include <memory>
 #include <optional>
 
 constexpr double ASPECT_RATIO = 16.0 / 9.0;
@@ -22,50 +27,33 @@ using namespace rtow;
 
 namespace {
 
-std::optional<double> hit_sphere(const Point3& sphere_center, double radius, const Ray& ray) {
-  Vec3 origin_to_sphere = sphere_center - ray.get_origin();
-  Vec3 ray_direction = ray.get_direction();
-
-  // Calculate terms to find discriminant
-  double a = Vec3::dot(ray_direction, ray_direction);
-  double h = Vec3::dot(ray_direction, origin_to_sphere);
-  double c = origin_to_sphere.length_squared() - (radius * radius);
-
-  if (double discriminant = (h * h) - (a * c); discriminant < 0.0) {
-    return std::nullopt;
-  } else {
-    // Ray intersects sphere at least once
-    return (h - std::sqrt(discriminant)) / a;
-  }
-}
-
-Color calculate_ray_color(const Ray& ray) {
+Color calculate_ray_color(const Ray& ray, const IHittable& world) {
   static const Color white(1.0, 1.0, 1.0);
   static const Color blue(0.5, 0.7, 1.0);
 
   static Point3 sphere_center(0.0, 0.0, -1.0);
-  static double sphere_radius = 0.5;
 
-  if (std::optional<double> t_opt = hit_sphere(sphere_center, sphere_radius, ray); t_opt) {
-    if (double t = t_opt.value(); t > 0.0) {
-      Vec3 normal(Vec3::normalize(ray.at(t) - sphere_center));
+  if (std::optional<Intersection> isect_opt = world.hit(ray, 0.0, std::numeric_limits<double>::infinity()); isect_opt) {
+    // We've hit an object!
+    const Intersection& isect = isect_opt.value();
 
-      // Map normal vector [-1, 1] to color [0, 1]
-      return 0.5 * Color(normal.x() + 1.0, normal.y() + 1.0, normal.z() + 1.0);
-    }
+    // Map normal vector [-1, 1] to color [0, 1]
+    return 0.5 * (isect.get_normal() + Color(1.0, 1.0, 1.0));
   }
 
+  // Else, draw the background (sky)
   Vec3 direction = ray.get_direction().normalized();
   double t = 0.5 * (direction.y() + 1.0);
 
-  // Draw the background (sky)
   return lerp(white, blue, t);
 }
 
 }  // namespace
 
 int main() {
-  Point3 camera_center;
+  HittableList world;
+  world.push_back(std::make_shared<Sphere>(Point3(0.0, 0.0, -1.0), 0.5));
+  world.push_back(std::make_shared<Sphere>(Point3(0.0, -100.5, -1.0), 100.0));
 
   // Calculate vectors across the horizontal and down the vertical viewport edges
   Vec3 viewport_x(VIEWPORT_WIDTH, 0.0, 0.0);
@@ -76,6 +64,7 @@ int main() {
   Vec3 pixel_delta_y = viewport_y / IMAGE_HEIGHT;
 
   // Calculate coordinate of upper left viewport pixel
+  Point3 camera_center;
   Point3 viewport_upper_left = camera_center - Vec3(0.0, 0.0, FOCAL_LENGTH) - (viewport_x * 0.5) - (viewport_y * 0.5);
   Point3 pixel_00 = viewport_upper_left + (pixel_delta_x * 0.5) + (pixel_delta_y * 0.5);
 
@@ -89,7 +78,7 @@ int main() {
 
       // Ray direction is not normalized, which is fine
       Ray ray(camera_center, pixel_center - camera_center);
-      Color pixel_color = calculate_ray_color(ray);
+      Color pixel_color = calculate_ray_color(ray, world);
 
       write_color(std::cout, pixel_color);
     }

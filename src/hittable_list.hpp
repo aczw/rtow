@@ -18,7 +18,6 @@ class HittableList : public IHittable {
   void clear();
 
   void push_back(std::shared_ptr<IHittable> object);
-  void push_back(std::shared_ptr<IHittable>&& object);
 
   std::optional<Intersection> hit(const Ray& ray, double t_min, double t_max) const override;
 };

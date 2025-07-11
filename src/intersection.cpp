@@ -14,4 +14,8 @@ Intersection::Intersection(double t, const Point3& point, const Ray& ray, const 
   assert((approx_equal(outward_normal.length(), 1.0)));
 }
 
+double Intersection::get_t() const {
+  return t;
+}
+
 }  // namespace rtow

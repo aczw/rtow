@@ -28,11 +28,6 @@ using namespace rtow;
 namespace {
 
 Color calculate_ray_color(const Ray& ray, const IHittable& world) {
-  static const Color white(1.0, 1.0, 1.0);
-  static const Color blue(0.5, 0.7, 1.0);
-
-  static Point3 sphere_center(0.0, 0.0, -1.0);
-
   if (std::optional<Intersection> isect_opt = world.hit(ray, 0.0, std::numeric_limits<double>::infinity()); isect_opt) {
     // We've hit an object!
     const Intersection& isect = isect_opt.value();
@@ -45,7 +40,7 @@ Color calculate_ray_color(const Ray& ray, const IHittable& world) {
   Vec3 direction = ray.get_direction().normalized();
   double t = 0.5 * (direction.y() + 1.0);
 
-  return lerp(white, blue, t);
+  return lerp(Color(1.0, 1.0, 1.0), Color(0.5, 0.7, 1.0), t);
 }
 
 }  // namespace

@@ -1,10 +1,11 @@
 #include "hittable_list.hpp"
 
+#include "ihittable.hpp"
+#include "intersection.hpp"
+
 #include <memory>
 #include <optional>
 #include <utility>
-#include "ihittable.hpp"
-#include "intersection.hpp"
 
 namespace rtow {
 

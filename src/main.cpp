@@ -1,5 +1,6 @@
 #include "color.hpp"
 #include "ray.hpp"
+#include "utils.hpp"
 #include "vec3.hpp"
 
 #include <algorithm>
@@ -58,7 +59,7 @@ Color calculate_ray_color(const Ray& ray) {
   double t = 0.5 * (direction.y() + 1.0);
 
   // Draw the background (sky)
-  return (1.0 - t) * white + t * blue;
+  return lerp(white, blue, t);
 }
 
 }  // namespace

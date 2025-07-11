@@ -53,6 +53,6 @@ using Point3 = Vec3;
 template <>
 struct std::formatter<rtow::Vec3> : std::formatter<std::string_view> {
   auto format(const rtow::Vec3& v, auto& ctx) const {
-    return std::format_to(ctx.out(), "[{}, {}, {}]", v[0], v[1], v[2]);
+    return std::format_to(ctx.out(), "[{:.3f}, {:.3f}, {:.3f}]", v[0], v[1], v[2]);
   }
 };

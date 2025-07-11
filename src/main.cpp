@@ -3,12 +3,14 @@
 #include "vec3.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <format>
 #include <iostream>
+#include <optional>
 
 constexpr double ASPECT_RATIO = 16.0 / 9.0;
 
-constexpr int IMAGE_WIDTH = 400;
+constexpr int IMAGE_WIDTH = 800;
 constexpr int IMAGE_HEIGHT = std::max(1, static_cast<int>(IMAGE_WIDTH / ASPECT_RATIO));
 
 constexpr double FOCAL_LENGTH = 1.0;
@@ -19,18 +21,21 @@ using namespace rtow;
 
 namespace {
 
-bool hit_sphere(const Point3& sphere_center, double radius, const Ray& ray) {
-  Vec3 origin_to_sphere = ray.get_origin() - sphere_center;
+std::optional<double> hit_sphere(const Point3& sphere_center, double radius, const Ray& ray) {
+  Vec3 origin_to_sphere = sphere_center - ray.get_origin();
   Vec3 ray_direction = ray.get_direction();
 
   // Calculate terms to find discriminant
   double a = Vec3::dot(ray_direction, ray_direction);
   double b = -2.0 * Vec3::dot(ray_direction, origin_to_sphere);
   double c = Vec3::dot(origin_to_sphere, origin_to_sphere) - (radius * radius);
-  double discriminant = (b * b) - (4.0 * a * c);
 
-  // Ray intersects sphere at least once
-  return discriminant >= 0;
+  if (double discriminant = (b * b) - (4.0 * a * c); discriminant < 0.0) {
+    return std::nullopt;
+  } else {
+    // Ray intersects sphere at least once
+    return (-b - std::sqrt(discriminant)) / (2.0 * a);
+  }
 }
 
 Color calculate_ray_color(const Ray& ray) {
@@ -40,13 +45,19 @@ Color calculate_ray_color(const Ray& ray) {
   static Point3 sphere_center(0.0, 0.0, -1.0);
   static double sphere_radius = 0.5;
 
-  if (hit_sphere(sphere_center, sphere_radius, ray)) {
-    return Color(1.0, 0.0, 0.0);
+  if (std::optional<double> t_opt = hit_sphere(sphere_center, sphere_radius, ray); t_opt) {
+    if (double t = t_opt.value(); t > 0.0) {
+      Vec3 normal(Vec3::normalize(ray.at(t) - sphere_center));
+
+      // Map normal vector [-1, 1] to color [0, 1]
+      return 0.5 * Color(normal.x() + 1.0, normal.y() + 1.0, normal.z() + 1.0);
+    }
   }
 
   Vec3 direction = ray.get_direction().normalized();
   double t = 0.5 * (direction.y() + 1.0);
 
+  // Draw the background (sky)
   return (1.0 - t) * white + t * blue;
 }
 

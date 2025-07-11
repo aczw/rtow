@@ -1,5 +1,4 @@
 #include "sphere.hpp"
-#include "ihittable.hpp"
 #include "vec3.hpp"
 
 #include <cmath>
@@ -9,7 +8,7 @@ namespace rtow {
 
 Sphere::Sphere(const Point3& center, double radius) : center(center), radius(std::fmax(0.0, radius)) {}
 
-std::optional<HitResult> Sphere::hit(const Ray& ray, double t_min, double t_max) const {
+std::optional<Intersection> Sphere::hit(const Ray& ray, double t_min, double t_max) const {
   Vec3 origin_to_sphere = center - ray.get_origin();
   Vec3 ray_direction = ray.get_direction();
 
@@ -37,7 +36,9 @@ std::optional<HitResult> Sphere::hit(const Ray& ray, double t_min, double t_max)
   }
 
   Point3 intersection_point = ray.at(root);
-  return HitResult(intersection_point, (intersection_point - center) / radius, root);
+  Vec3 outward_normal = (center - intersection_point) / radius;
+
+  return Intersection(root, intersection_point, ray, outward_normal);
 }
 
 }  // namespace rtow

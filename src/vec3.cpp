@@ -23,7 +23,11 @@ double Vec3::z() const {
 }
 
 double Vec3::length() const {
-  return std::sqrt(dot(*this, *this));
+  return std::sqrt(length_squared());
+}
+
+double Vec3::length_squared() const {
+  return dot(*this, *this);
 }
 
 Vec3 Vec3::normalized() const {

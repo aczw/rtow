@@ -27,14 +27,14 @@ std::optional<double> hit_sphere(const Point3& sphere_center, double radius, con
 
   // Calculate terms to find discriminant
   double a = Vec3::dot(ray_direction, ray_direction);
-  double b = -2.0 * Vec3::dot(ray_direction, origin_to_sphere);
-  double c = Vec3::dot(origin_to_sphere, origin_to_sphere) - (radius * radius);
+  double h = Vec3::dot(ray_direction, origin_to_sphere);
+  double c = origin_to_sphere.length_squared() - (radius * radius);
 
-  if (double discriminant = (b * b) - (4.0 * a * c); discriminant < 0.0) {
+  if (double discriminant = (h * h) - (a * c); discriminant < 0.0) {
     return std::nullopt;
   } else {
     // Ray intersects sphere at least once
-    return (-b - std::sqrt(discriminant)) / (2.0 * a);
+    return (h - std::sqrt(discriminant)) / a;
   }
 }
 

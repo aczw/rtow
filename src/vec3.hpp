@@ -19,6 +19,7 @@ class Vec3 {
   double z() const;
 
   double length() const;
+  double length_squared() const;
   Vec3 normalized() const;
 
   Vec3 operator-() const;

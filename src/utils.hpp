@@ -17,4 +17,6 @@ bool approx_equal(T a, T b) {
   return std::fabs(a - b) <= std::numeric_limits<T>::epsilon();
 }
 
+double to_radians(double degrees);
+
 }  // namespace rtow

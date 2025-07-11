@@ -1,4 +1,5 @@
 #include "intersection.hpp"
+
 #include "utils.hpp"
 
 #include <cassert>

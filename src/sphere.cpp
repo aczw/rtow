@@ -1,4 +1,5 @@
 #include "sphere.hpp"
+
 #include "vec3.hpp"
 
 #include <cmath>

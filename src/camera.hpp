@@ -29,7 +29,7 @@ class Camera {
   Camera(double aspect_ratio, int image_width);
 
   /// Constructs a ray originating from the camera center and directed at a
-  // randomly sampled point around the pixel location (x, y).
+  /// randomly sampled point around the pixel location (x, y).
   Ray construct_ray(int x, int y) const;
 
   Color calculate_ray_color(const Ray& ray, const IHittable& world);

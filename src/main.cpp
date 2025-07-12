@@ -2,6 +2,7 @@
 #include "hittable_list.hpp"
 #include "ihittable.hpp"
 #include "intersection.hpp"
+#include "interval.hpp"
 #include "ray.hpp"
 #include "sphere.hpp"
 #include "utils.hpp"
@@ -10,7 +11,6 @@
 #include <algorithm>
 #include <format>
 #include <iostream>
-#include <limits>
 #include <memory>
 #include <optional>
 
@@ -28,7 +28,7 @@ using namespace rtow;
 namespace {
 
 Color calculate_ray_color(const Ray& ray, const IHittable& world) {
-  if (std::optional<Intersection> isect_opt = world.hit(ray, 0.0, std::numeric_limits<double>::infinity()); isect_opt) {
+  if (std::optional<Intersection> isect_opt = world.hit(ray, Interval(0.0, Interval::Limits::infinity())); isect_opt) {
     // We've hit an object!
     const Intersection& isect = isect_opt.value();
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ihittable.hpp"
+#include "interval.hpp"
 
 #include <memory>
 #include <vector>
@@ -19,7 +20,7 @@ class HittableList : public IHittable {
 
   void push_back(std::shared_ptr<IHittable> object);
 
-  std::optional<Intersection> hit(const Ray& ray, double t_min, double t_max) const override;
+  std::optional<Intersection> hit(const Ray& ray, Interval ray_t) const override;
 };
 
 }  // namespace rtow

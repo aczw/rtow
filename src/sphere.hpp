@@ -13,7 +13,7 @@ class Sphere : public IHittable {
  public:
   Sphere(const Point3& center, double radius);
 
-  std::optional<Intersection> hit(const Ray& ray, Interval ray_t) const override;
+  std::optional<Intersection> hit(const Ray& ray, Interval<> ray_t) const override;
 };
 
 }  // namespace rtow

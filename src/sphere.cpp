@@ -9,7 +9,7 @@ namespace rtow {
 
 Sphere::Sphere(const Point3& center, double radius) : center(center), radius(std::fmax(0.0, radius)) {}
 
-std::optional<Intersection> Sphere::hit(const Ray& ray, Interval ray_t) const {
+std::optional<Intersection> Sphere::hit(const Ray& ray, Interval<> ray_t) const {
   Vec3 origin_to_sphere = center - ray.get_origin();
   Vec3 ray_direction = ray.get_direction();
 

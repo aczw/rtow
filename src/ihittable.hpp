@@ -20,7 +20,7 @@ class IHittable {
 
   virtual ~IHittable() = default;
 
-  virtual std::optional<Intersection> hit(const Ray& ray, Interval ray_t) const = 0;
+  virtual std::optional<Intersection> hit(const Ray& ray, Interval<> ray_t) const = 0;
 };
 
 }  // namespace rtow

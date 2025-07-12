@@ -5,39 +5,37 @@
 
 namespace rtow {
 
-template <class Num>
-  requires std::numeric_limits<Num>::has_infinity
-class IntervalBase {
+template <class Real = double>
+  requires std::numeric_limits<Real>::has_infinity
+class Interval {
  private:
-  Num min;
-  Num max;
+  Real min;
+  Real max;
 
  public:
-  using Limits = std::numeric_limits<Num>;
+  static constexpr Real infinity_value = std::numeric_limits<Real>::infinity();
 
-  IntervalBase() : min(-Limits::infinity()), max(Limits::infinity()) {};
-  IntervalBase(Num min, Num max) : min(min), max(max) {};
+  Interval() : min(-infinity_value), max(infinity_value) {};
+  Interval(Real min, Real max) : min(min), max(max) {};
 
-  Num get_min() const { return min; }
-  Num get_max() const { return max; }
+  Real get_min() const { return min; }
+  Real get_max() const { return max; }
 
-  bool contains(Num num) const { return min <= num && num <= max; }
-  bool surrounds(Num num) const { return min < num && num < max; }
+  bool contains(Real num) const { return min <= num && num <= max; }
+  bool surrounds(Real num) const { return min < num && num < max; }
 
-  Num length() const { return max - min; }
+  Real length() const { return max - min; }
 
-  static const IntervalBase<Num> empty;
-  static const IntervalBase<Num> universe;
+  static const Interval empty;
+  static const Interval universe;
 };
 
-template <class Num>
-  requires std::numeric_limits<Num>::has_infinity
-const IntervalBase<Num> IntervalBase<Num>::empty(-Limits::infinity(), Limits::infinity());
+template <class Real>
+  requires std::numeric_limits<Real>::has_infinity
+const Interval<Real> Interval<Real>::empty(infinity_value, -infinity_value);
 
-template <class Num>
-  requires std::numeric_limits<Num>::has_infinity
-const IntervalBase<Num> IntervalBase<Num>::universe(Limits::infinity(), -Limits::infinity());
-
-using Interval = IntervalBase<double>;
+template <class Real>
+  requires std::numeric_limits<Real>::has_infinity
+const Interval<Real> Interval<Real>::universe(-infinity_value, infinity_value);
 
 }  // namespace rtow

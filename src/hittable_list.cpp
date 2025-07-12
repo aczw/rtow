@@ -20,7 +20,7 @@ void HittableList::push_back(std::shared_ptr<IHittable> object) {
   objects.push_back(std::move(object));
 }
 
-std::optional<Intersection> HittableList::hit(const Ray& ray, Interval ray_t) const {
+std::optional<Intersection> HittableList::hit(const Ray& ray, Interval<> ray_t) const {
   std::optional<Intersection> result;
   double min = ray_t.get_min();
   double closest = ray_t.get_max();

@@ -20,7 +20,7 @@ class HittableList : public IHittable {
 
   void push_back(std::shared_ptr<IHittable> object);
 
-  std::optional<Intersection> hit(const Ray& ray, Interval ray_t) const override;
+  std::optional<Intersection> hit(const Ray& ray, Interval<> ray_t) const override;
 };
 
 }  // namespace rtow

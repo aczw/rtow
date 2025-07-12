@@ -1,5 +1,6 @@
 #include "camera.hpp"
 
+#include "interval.hpp"
 #include "utils.hpp"
 
 #include <algorithm>
@@ -23,7 +24,9 @@ Camera::Camera(double aspect_ratio, int image_width)
       first_pixel(viewport_upper_left + 0.5 * (pixel_delta_x + pixel_delta_y)) {}
 
 Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world) {
-  if (std::optional<Intersection> isect_opt = world.hit(ray, Interval(0.0, Interval::Limits::infinity())); isect_opt) {
+  static const Interval interval_to_check(0.0, Interval<>::infinity_value);
+
+  if (std::optional<Intersection> isect_opt = world.hit(ray, interval_to_check); isect_opt) {
     // We've hit an object!
     const Intersection& isect = isect_opt.value();
 

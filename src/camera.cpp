@@ -1,6 +1,7 @@
 #include "camera.hpp"
 
 #include "interval.hpp"
+#include "ray.hpp"
 #include "utils.hpp"
 
 #include <algorithm>
@@ -12,6 +13,8 @@ Camera::Camera(double aspect_ratio, int image_width)
     : aspect_ratio(aspect_ratio),
       image_width(image_width),
       image_height(std::max(1, static_cast<int>(image_width / this->aspect_ratio))),
+      samples_per_pixel(100),
+      pixel_samples_scale(1.0 / samples_per_pixel),
       focal_length(1.0),
       viewport_height(2.0),
       viewport_width(viewport_height * (static_cast<double>(image_width) / image_height)),
@@ -22,6 +25,14 @@ Camera::Camera(double aspect_ratio, int image_width)
       pixel_delta_y(viewport_y / image_height),
       viewport_upper_left(center - Vec3(0.0, 0.0, focal_length) - (viewport_x * 0.5) - (viewport_y * 0.5)),
       first_pixel(viewport_upper_left + 0.5 * (pixel_delta_x + pixel_delta_y)) {}
+
+Ray Camera::construct_ray(int x, int y) const {
+  Point3 offset = sample_square();
+  Point3 sample_point = first_pixel + ((x + offset.x()) * pixel_delta_x) + ((y + offset.y()) * pixel_delta_y);
+
+  // Ray direction is not normalized, which is fine
+  return Ray(center, sample_point - center);
+}
 
 Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world) {
   static const Interval interval_to_check(0.0, Interval<>::infinity_value);
@@ -44,22 +55,22 @@ Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world) {
 void Camera::render(const IHittable& world) {
   std::cout << std::format("P3\n{} {}\n255\n", image_width, image_height);
 
-  for (int y = 0; y < image_height; y++) {
-    std::clog << std::format("\rScanlines remaining: {} ", image_height - 1) << std::flush;
+  for (int y = 0; y < image_height; ++y) {
+    std::clog << std::format("\rScanlines remaining: {} ", image_height - y) << std::flush;
 
-    for (int x = 0; x < image_width; x++) {
-      Point3 pixel_center = first_pixel + (x * pixel_delta_x) + (y * pixel_delta_y);
+    for (int x = 0; x < image_width; ++x) {
+      Color pixel_color;
 
-      // Ray direction is not normalized, which is fine
-      Ray ray(center, pixel_center - center);
-      Color pixel_color = calculate_ray_color(ray, world);
+      for (int sample_num = 0; sample_num < samples_per_pixel; ++sample_num) {
+        Ray ray = construct_ray(x, y);
+        pixel_color += calculate_ray_color(ray, world);
+      }
 
-      write_color(std::cout, pixel_color);
+      write_color(std::cout, pixel_samples_scale * pixel_color);
     }
   }
 
-  // Extra spaces are a hack to overwrite previous text
-  std::clog << "\rDone.                       \n";
+  std::clog << std::format("\rFinished processing image with resolution {}x{}.\n", image_width, image_height);
 }
 
 }  // namespace rtow

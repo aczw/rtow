@@ -24,6 +24,12 @@ class Interval {
   bool contains(Real num) const { return min <= num && num <= max; }
   bool surrounds(Real num) const { return min < num && num < max; }
 
+  Real clamp(Real num) const {
+    if (num < min) return min;
+    if (num > max) return max;
+    return num;
+  }
+
   Real length() const { return max - min; }
 
   static const Interval empty;

@@ -9,10 +9,12 @@ namespace rtow {
 
 class Camera {
  private:
-  double aspect_ratio;  ///< Ideal ratio of image width over height.
-  int image_width;      ///< Actual rendered image width in pixel count.
-  int image_height;     ///< Actual rendered image height in pixel height.
-  double focal_length;  ///< Distance between camera center and viewport.
+  double aspect_ratio;         ///< Ideal ratio of image width over height.
+  int image_width;             ///< Actual rendered image width in pixel count.
+  int image_height;            ///< Actual rendered image height in pixel height.
+  int samples_per_pixel;       ///< Number of random samples for each pixel.
+  double pixel_samples_scale;  ///< Color scale factor for a sum of pixel samples.
+  double focal_length;         ///< Distance between camera center and viewport.
   double viewport_height;
   double viewport_width;
   Vec3 viewport_x;
@@ -25,6 +27,10 @@ class Camera {
 
  public:
   Camera(double aspect_ratio, int image_width);
+
+  /// Constructs a ray originating from the camera center and directed at a
+  // randomly sampled point around the pixel location (x, y).
+  Ray construct_ray(int x, int y) const;
 
   Color calculate_ray_color(const Ray& ray, const IHittable& world);
   void render(const IHittable& world);

@@ -47,7 +47,9 @@ Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world, int bo
   if (std::optional<Intersection> isect_opt = world.hit(ray, interval_to_check); isect_opt) {
     // We've hit an object!
     const Intersection& isect = isect_opt.value();
-    Vec3 new_direction = Vec3::get_random_on_hemisphere(isect.get_normal());
+
+    // Pick a point on the unit sphere that is tangent to the intersection point
+    Vec3 new_direction = isect.get_normal() + Vec3::get_random_unit_vector();
 
     // All geometry use a diffuse material that returns 50% of the original ray's color on bounce
     return 0.5 * calculate_ray_color(Ray(isect.get_point(), new_direction), world, bounce_number + 1);

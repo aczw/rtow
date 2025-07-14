@@ -12,7 +12,7 @@ class Intersection {
   double t;
   Point3 point;
   Surface side;
-  Vec3 normal;
+  Vec3 normal;  ///< Normalized normal vector.
 
  public:
   Intersection(double t, const Point3& point, const Ray& ray, const Vec3& outward_normal);

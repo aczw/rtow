@@ -35,6 +35,11 @@ class Vec3 {
   static double dot(const Vec3& v1, const Vec3& v2);
   static Vec3 cross(const Vec3& v1, const Vec3& v2);
   static Vec3 normalize(const Vec3& v);
+
+  static Vec3 get_random_unit_vector();
+  static Vec3 get_random_on_hemisphere(const Vec3& normal);
+  static Vec3 get_random();
+  static Vec3 get_random(double min, double max);
 };
 
 Vec3 operator+(const Vec3& v1, const Vec3& v2);

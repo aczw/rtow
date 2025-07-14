@@ -10,7 +10,7 @@
 
 namespace rtow {
 
-constexpr int NUM_EPSILONS = 5;
+constexpr int NUM_EPSILONS = 1'000'000;
 
 template <class T>
 T lerp(T a, T b, double t) {
@@ -20,7 +20,7 @@ T lerp(T a, T b, double t) {
 template <class T>
   requires std::floating_point<T>
 bool approx_equal(T a, T b) {
-  return std::fabs(a - b) < NUM_EPSILONS * std::numeric_limits<T>::epsilon();
+  return std::fabs(a - b) < static_cast<T>(NUM_EPSILONS) * std::numeric_limits<T>::epsilon();
 }
 
 double to_radians(double degrees);

@@ -18,7 +18,11 @@ double Intersection::get_t() const {
   return t;
 }
 
-Vec3 Intersection::get_normal() const {
+const Vec3& Intersection::get_point() const {
+  return point;
+}
+
+const Vec3& Intersection::get_normal() const {
   return normal;
 }
 

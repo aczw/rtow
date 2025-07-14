@@ -40,9 +40,10 @@ Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world) {
   if (std::optional<Intersection> isect_opt = world.hit(ray, interval_to_check); isect_opt) {
     // We've hit an object!
     const Intersection& isect = isect_opt.value();
+    Vec3 new_direction = Vec3::get_random_on_hemisphere(isect.get_normal());
 
-    // Map normal vector [-1, 1] to color [0, 1]
-    return 0.5 * (isect.get_normal() + Color(1.0, 1.0, 1.0));
+    // All geometry use a diffuse material that returns 50% of the original ray's color on bounce
+    return 0.5 * calculate_ray_color(Ray(isect.get_point(), new_direction), world);
   }
 
   // Else, draw the background (sky)

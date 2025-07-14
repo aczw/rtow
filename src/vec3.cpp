@@ -91,7 +91,7 @@ Vec3 Vec3::normalize(const Vec3& v) {
 
 Vec3 Vec3::get_random_unit_vector() {
   while (true) {
-    Point3 generated_point = get_random();
+    Point3 generated_point = get_random(-1.0, 1.0);
     double length_squared = generated_point.length_squared();
 
     // Check whether x^2 + y^2 + z+2 <= 1, aka we're inside the unit sphere

@@ -6,7 +6,7 @@
 #include <memory>
 
 constexpr double ASPECT_RATIO = 16.0 / 9.0;
-constexpr int IMAGE_WIDTH = 600;
+constexpr int IMAGE_WIDTH = 400;
 
 using namespace rtow;
 

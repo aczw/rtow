@@ -12,17 +12,17 @@ namespace rtow {
 Camera::Camera(double aspect_ratio, int image_width)
     : aspect_ratio(aspect_ratio),
       image_width(image_width),
-      image_height(std::max(1, static_cast<int>(image_width / this->aspect_ratio))),
-      max_depth(10),
+      image_height(std::max(1, static_cast<int>(this->image_width / this->aspect_ratio))),
+      max_depth(50),
       samples_per_pixel(100),
       pixel_samples_scale(1.0 / samples_per_pixel),
       focal_length(1.0),
       viewport_height(2.0),
-      viewport_width(viewport_height * (static_cast<double>(image_width) / image_height)),
+      viewport_width(viewport_height * (static_cast<double>(this->image_width) / image_height)),
       viewport_x(viewport_width, 0.0, 0.0),
       viewport_y(0.0, -viewport_height, 0.0),
       center(),
-      pixel_delta_x(viewport_x / image_width),
+      pixel_delta_x(viewport_x / this->image_width),
       pixel_delta_y(viewport_y / image_height),
       viewport_upper_left(center - Vec3(0.0, 0.0, focal_length) - (viewport_x * 0.5) - (viewport_y * 0.5)),
       first_pixel(viewport_upper_left + 0.5 * (pixel_delta_x + pixel_delta_y)) {}
@@ -36,7 +36,8 @@ Ray Camera::construct_ray(int x, int y) const {
 }
 
 Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world, int bounce_number) {
-  static const Interval interval_to_check(0.0, Interval<>::infinity_value);
+  // Start a very small interval amount away from the intersection point to avoid self intersections
+  static const Interval interval_to_check(0.001, Interval<>::infinity_value);
 
   // If we've exceeded the maximum number of bounces, then consider this ray hopeless
   if (bounce_number > max_depth) {

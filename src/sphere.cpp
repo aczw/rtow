@@ -7,7 +7,8 @@
 
 namespace rtow {
 
-Sphere::Sphere(const Point3& center, double radius) : center(center), radius(std::fmax(0.0, radius)) {}
+Sphere::Sphere(const Point3& center, double radius, std::shared_ptr<const BaseMaterial> material)
+    : center(center), radius(std::fmax(0.0, radius)), material(material) {}
 
 std::optional<Intersection> Sphere::hit(const Ray& ray, Interval<> ray_t) const {
   Vec3 origin_to_sphere = center - ray.get_origin();
@@ -39,7 +40,7 @@ std::optional<Intersection> Sphere::hit(const Ray& ray, Interval<> ray_t) const 
   Point3 intersection_point = ray.at(root);
   Vec3 outward_normal = (center - intersection_point) / radius;
 
-  return Intersection(root, intersection_point, ray, outward_normal);
+  return Intersection(root, intersection_point, ray, outward_normal, material);
 }
 
 }  // namespace rtow

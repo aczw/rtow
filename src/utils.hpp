@@ -50,4 +50,6 @@ Real get_random(Real min, Real max) {
 /// @note This means the bounds of the square are [-0.5, -0.5] to [0.5, 0.5].
 Point3 sample_square();
 
+double linear_to_gamma(double linear_component);
+
 }  // namespace rtow

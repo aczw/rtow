@@ -12,6 +12,7 @@ class Camera {
   double aspect_ratio;         ///< Ideal ratio of image width over height.
   int image_width;             ///< Actual rendered image width in pixel count.
   int image_height;            ///< Actual rendered image height in pixel height.
+  int max_depth;               ///< Maximum number of ray bounces into the scene.
   int samples_per_pixel;       ///< Number of random samples for each pixel.
   double pixel_samples_scale;  ///< Color scale factor for a sum of pixel samples.
   double focal_length;         ///< Distance between camera center and viewport.
@@ -32,7 +33,7 @@ class Camera {
   /// randomly sampled point around the pixel location (x, y).
   Ray construct_ray(int x, int y) const;
 
-  Color calculate_ray_color(const Ray& ray, const IHittable& world);
+  Color calculate_ray_color(const Ray& ray, const IHittable& world, int bounce_number);
   void render(const IHittable& world);
 };
 

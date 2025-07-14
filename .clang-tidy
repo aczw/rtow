@@ -1,1 +1,1 @@
-Checks: "clang-analyzer-*,cppcoreguidelines-*,bugprone-*,misc-*,-cppcoreguidelines-pro-bounds-constant-array-index,-bugprone-easily-swappable-parameters,-cppcoreguidelines-avoid-magic-numbers"
+Checks: "clang-analyzer-*,cppcoreguidelines-*,bugprone-*,misc-*,-cppcoreguidelines-pro-bounds-constant-array-index,-bugprone-easily-swappable-parameters,-cppcoreguidelines-avoid-magic-numbers,-misc-no-recursion"

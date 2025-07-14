@@ -13,6 +13,7 @@ Camera::Camera(double aspect_ratio, int image_width)
     : aspect_ratio(aspect_ratio),
       image_width(image_width),
       image_height(std::max(1, static_cast<int>(image_width / this->aspect_ratio))),
+      max_depth(10),
       samples_per_pixel(100),
       pixel_samples_scale(1.0 / samples_per_pixel),
       focal_length(1.0),
@@ -34,8 +35,13 @@ Ray Camera::construct_ray(int x, int y) const {
   return Ray(center, sample_point - center);
 }
 
-Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world) {
+Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world, int bounce_number) {
   static const Interval interval_to_check(0.0, Interval<>::infinity_value);
+
+  // If we've exceeded the maximum number of bounces, then consider this ray hopeless
+  if (bounce_number > max_depth) {
+    return Color(0.0, 0.0, 0.0);
+  }
 
   if (std::optional<Intersection> isect_opt = world.hit(ray, interval_to_check); isect_opt) {
     // We've hit an object!
@@ -43,7 +49,7 @@ Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world) {
     Vec3 new_direction = Vec3::get_random_on_hemisphere(isect.get_normal());
 
     // All geometry use a diffuse material that returns 50% of the original ray's color on bounce
-    return 0.5 * calculate_ray_color(Ray(isect.get_point(), new_direction), world);
+    return 0.5 * calculate_ray_color(Ray(isect.get_point(), new_direction), world, bounce_number + 1);
   }
 
   // Else, draw the background (sky)
@@ -64,7 +70,7 @@ void Camera::render(const IHittable& world) {
 
       for (int sample_num = 0; sample_num < samples_per_pixel; ++sample_num) {
         Ray ray = construct_ray(x, y);
-        pixel_color += calculate_ray_color(ray, world);
+        pixel_color += calculate_ray_color(ray, world, 0);
       }
 
       write_color(std::cout, pixel_samples_scale * pixel_color);

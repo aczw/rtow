@@ -15,8 +15,8 @@ using namespace rtow;
 int main() {
   std::shared_ptr material_ground = std::make_shared<const LambertianMaterial>(Color(0.8, 0.8, 0.0));
   std::shared_ptr material_center = std::make_shared<const LambertianMaterial>(Color(0.1, 0.2, 0.5));
-  std::shared_ptr material_left = std::make_shared<const MetalMaterial>(Color(0.8, 0.8, 0.8));
-  std::shared_ptr material_right = std::make_shared<const MetalMaterial>(Color(0.8, 0.6, 0.2));
+  std::shared_ptr material_left = std::make_shared<const MetalMaterial>(Color(0.8, 0.8, 0.8), 0.3);
+  std::shared_ptr material_right = std::make_shared<const MetalMaterial>(Color(0.8, 0.6, 0.2), 1.0);
 
   HittableList world;
   world.push_back(std::make_shared<Sphere>(Point3(0.0, -100.5, -1.0), 100.0, material_ground));

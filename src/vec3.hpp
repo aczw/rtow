@@ -22,6 +22,9 @@ class Vec3 {
   double length_squared() const;
   Vec3 normalized() const;
 
+  /// Returns true if all components of the vector are near zero.
+  bool near_zero() const;
+
   Vec3 operator-() const;
 
   double operator[](int index) const;

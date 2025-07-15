@@ -40,6 +40,10 @@ Vec3 Vec3::normalized() const {
   return Vec3::normalize(*this);
 }
 
+bool Vec3::near_zero() const {
+  return approx_equal(data[0], 0.0) && approx_equal(data[1], 0.0) && approx_equal(data[2], 0.0);
+}
+
 Vec3 Vec3::operator-() const {
   return Vec3(-data[0], -data[1], -data[2]);
 }

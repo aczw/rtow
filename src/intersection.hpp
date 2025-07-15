@@ -30,6 +30,7 @@ class Intersection {
   double get_t() const;
   const Vec3& get_point() const;
   const Vec3& get_normal() const;
+  const std::shared_ptr<const BaseMaterial>& get_material() const;
 };
 
 }  // namespace rtow

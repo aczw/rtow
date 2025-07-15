@@ -31,4 +31,8 @@ const Vec3& Intersection::get_normal() const {
   return normal;
 }
 
+const std::shared_ptr<const BaseMaterial>& Intersection::get_material() const {
+  return material;
+}
+
 }  // namespace rtow

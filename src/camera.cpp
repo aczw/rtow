@@ -1,5 +1,6 @@
 #include "camera.hpp"
 
+#include "base_material.hpp"
 #include "interval.hpp"
 #include "ray.hpp"
 #include "utils.hpp"
@@ -38,21 +39,25 @@ Ray Camera::construct_ray(int x, int y) const {
 Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world, int bounce_number) {
   // Start a very small interval amount away from the intersection point to avoid self intersections
   static const Interval interval_to_check(0.001, Interval<>::infinity_value);
+  static const Color black_color(0.0, 0.0, 0.0);
 
   // If we've exceeded the maximum number of bounces, then consider this ray hopeless
   if (bounce_number > max_depth) {
-    return Color(0.0, 0.0, 0.0);
+    return black_color;
   }
 
   if (std::optional<Intersection> isect_opt = world.hit(ray, interval_to_check); isect_opt) {
     // We've hit an object!
     const Intersection& isect = isect_opt.value();
 
-    // Pick a point on the unit sphere that is tangent to the intersection point
-    Vec3 new_direction = isect.get_normal() + Vec3::get_random_unit_vector();
+    // Use the geometry's material to calculate the next ray and attentuation
+    if (std::optional<ScatterResult> result_opt = isect.get_material()->scatter(ray, isect); result_opt) {
+      const ScatterResult& result = result_opt.value();
+      return result.attenuation * calculate_ray_color(result.scattered, world, bounce_number + 1);
+    }
 
-    // All geometry use a diffuse material that returns 50% of the original ray's color on bounce
-    return 0.5 * calculate_ray_color(Ray(isect.get_point(), new_direction), world, bounce_number + 1);
+    // If the ray was not scattered, then it was absorbed by this geometry
+    return black_color;
   }
 
   // Else, draw the background (sky)

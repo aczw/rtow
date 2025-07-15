@@ -6,7 +6,7 @@
 namespace rtow {
 
 /// A material that always randomly scatters the incoming ray. Attenuates the light with
-// its own reflectance, also known as albedo.
+/// its own reflectance, also known as albedo.
 class LambertianMaterial : public BaseMaterial {
  public:
   LambertianMaterial(const Color& albedo);

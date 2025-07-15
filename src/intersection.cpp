@@ -16,7 +16,7 @@ Intersection::Intersection(double t,
       side(Vec3::dot(ray.get_direction(), outward_normal) < 0.0 ? Surface::Front : Surface::Back),
       normal(side == Surface::Front ? outward_normal : -outward_normal),
       material(material) {
-  assert((approx_equal(outward_normal.length(), 1.0)));
+  assert(approx_equal(outward_normal.length(), 1.0));
 }
 
 double Intersection::get_t() const {

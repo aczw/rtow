@@ -15,7 +15,10 @@ std::optional<ScatterResult> LambertianMaterial::scatter(const Ray&, const Inter
     scatter_direction = isect_normal;
   }
 
-  return ScatterResult{.scattered = Ray(isect.get_point(), scatter_direction), .attenuation = albedo};
+  return ScatterResult{
+      .scattered = Ray(isect.get_point(), scatter_direction),
+      .attenuation = albedo,
+  };
 }
 
 }  // namespace rtow

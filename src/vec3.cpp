@@ -2,6 +2,7 @@
 
 #include "utils.hpp"
 
+#include <cassert>
 #include <cmath>
 #include <format>
 #include <iostream>
@@ -91,6 +92,20 @@ Vec3 Vec3::cross(const Vec3& v1, const Vec3& v2) {
 
 Vec3 Vec3::normalize(const Vec3& v) {
   return v / v.length();
+}
+
+Vec3 Vec3::reflect_about_normal(const Vec3& vector, const Vec3& normal) {
+  assert(approx_equal(normal.length(), 1.0));
+
+  // Find the length of the projection of `vector` on to `normal` and construct a new vector using it
+  double length = dot(vector, normal);
+  Vec3 b = length * normal;
+
+  // In our system, `vector` is always pointing into the surface while `normal` is pointing out.
+  // Therefore the projection direction is backwards and we need to flip it.
+  b = -b;
+
+  return vector + 2 * b;
 }
 
 Vec3 Vec3::get_random_unit_vector() {

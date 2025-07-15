@@ -39,6 +39,9 @@ class Vec3 {
   static Vec3 cross(const Vec3& v1, const Vec3& v2);
   static Vec3 normalize(const Vec3& v);
 
+  /// Reflects `vector` about a `normal`. Assumes `normal` is a unit vector.
+  static Vec3 reflect_about_normal(const Vec3& vector, const Vec3& normal);
+
   static Vec3 get_random_unit_vector();
   static Vec3 get_random_on_hemisphere(const Vec3& normal);
   static Vec3 get_random();

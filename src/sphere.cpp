@@ -38,7 +38,7 @@ std::optional<Intersection> Sphere::hit(const Ray& ray, Interval<> ray_t) const 
   }
 
   Point3 intersection_point = ray.at(root);
-  Vec3 outward_normal = (center - intersection_point) / radius;
+  Vec3 outward_normal = (intersection_point - center) / radius;
 
   return Intersection(root, intersection_point, ray, outward_normal, material);
 }

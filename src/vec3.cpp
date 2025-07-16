@@ -13,10 +13,6 @@ namespace rtow {
 /// finite precision issues.
 constexpr double WILL_UNDERFLOW = 1e-160;
 
-Vec3::Vec3() : data({0.0, 0.0, 0.0}) {}
-
-Vec3::Vec3(double v0, double v1, double v2) : data({v0, v1, v2}) {}
-
 double Vec3::x() const {
   return data[0];
 }

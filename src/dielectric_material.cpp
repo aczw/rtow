@@ -14,7 +14,7 @@ std::optional<ScatterResult> DieletricMaterial::scatter(const Ray& incoming_ray,
   Vec3 refracted_ray = Vec3::refract_about_normal(incoming_ray_direction, isect.get_normal(), ri_in_context);
 
   return ScatterResult{
-      .attenuation = Color(1.0, 1.0, 1.0),
+      .attenuation = constants::white_color,
       .scattered = Ray(isect.get_point(), refracted_ray),
   };
 }

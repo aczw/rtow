@@ -10,7 +10,12 @@
 
 namespace rtow {
 
+/// Constant not used anywhere else, so let's enforce internal linkage for now
+namespace {
+
 constexpr int NUM_EPSILONS = 1'000'000;
+
+}
 
 template <class T>
 T lerp(T a, T b, double t) {

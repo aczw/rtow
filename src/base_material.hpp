@@ -25,7 +25,7 @@ class BaseMaterial {
 
   virtual ~BaseMaterial() = default;
 
-  virtual std::optional<ScatterResult> scatter(const Ray& ray_in, const Intersection& isect) const;
+  virtual std::optional<ScatterResult> scatter(const Ray& incoming_ray, const Intersection& isect) const;
 };
 
 }  // namespace rtow

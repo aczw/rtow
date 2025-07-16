@@ -11,7 +11,7 @@ class LambertianMaterial : public BaseMaterial {
  public:
   LambertianMaterial(const Color& albedo);
 
-  std::optional<ScatterResult> scatter(const Ray& ray_in, const Intersection& isect) const override;
+  std::optional<ScatterResult> scatter(const Ray& incoming_ray, const Intersection& isect) const override;
 
  private:
   Color albedo;

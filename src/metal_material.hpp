@@ -10,7 +10,7 @@ class MetalMaterial : public BaseMaterial {
   MetalMaterial(const Color& albedo);
   MetalMaterial(const Color& albedo, double fuzz);
 
-  std::optional<ScatterResult> scatter(const Ray& ray_in, const Intersection& isect) const override;
+  std::optional<ScatterResult> scatter(const Ray& incoming_ray, const Intersection& isect) const override;
 
  private:
   Color albedo;

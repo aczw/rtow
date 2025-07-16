@@ -27,6 +27,10 @@ const Vec3& Intersection::get_point() const {
   return point;
 }
 
+Surface Intersection::get_side() const {
+  return side;
+}
+
 const Vec3& Intersection::get_normal() const {
   return normal;
 }

@@ -108,6 +108,18 @@ Vec3 Vec3::reflect_about_normal(const Vec3& vector, const Vec3& normal) {
   return vector + 2 * b;
 }
 
+Vec3 Vec3::refract_about_normal(const Vec3& vector, const Vec3& normal, double eta_i_over_eta_f) {
+  assert(approx_equal(vector.length(), 1.0));
+  assert(approx_equal(normal.length(), 1.0));
+
+  // Derived from Snell's Law
+  double cos_theta = std::fmin(dot(-vector, normal), 1.0);
+  Vec3 refracted_ray_perp = eta_i_over_eta_f * (vector + cos_theta * normal);
+  Vec3 refracted_ray_parallel = -std::sqrt(std::fabs(1.0 - refracted_ray_perp.length_squared())) * normal;
+
+  return refracted_ray_perp + refracted_ray_parallel;
+}
+
 Vec3 Vec3::get_random_unit_vector() {
   while (true) {
     Point3 generated_point = get_random(-1.0, 1.0);

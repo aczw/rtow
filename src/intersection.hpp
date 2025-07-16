@@ -17,7 +17,7 @@ class Intersection {
   double t;
   Point3 point;
   Surface side;
-  Vec3 normal;                                   ///< Normalized normal vector.
+  Vec3 normal;                                   ///< Normal vector. Enforced to be a unit vector at construction.
   std::shared_ptr<const BaseMaterial> material;  ///< Pointer to the material at the intersection point.
 
  public:
@@ -29,6 +29,7 @@ class Intersection {
 
   double get_t() const;
   const Vec3& get_point() const;
+  Surface get_side() const;
   const Vec3& get_normal() const;
   const std::shared_ptr<const BaseMaterial>& get_material() const;
 };

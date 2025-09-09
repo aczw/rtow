@@ -1,7 +1,7 @@
 #include "camera.hpp"
 
-#include "base_material.hpp"
 #include "interval.hpp"
+#include "material/base_material.hpp"
 #include "ray.hpp"
 #include "utils.hpp"
 

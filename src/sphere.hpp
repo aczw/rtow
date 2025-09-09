@@ -1,7 +1,7 @@
 #pragma once
 
-#include "base_material.hpp"
 #include "ihittable.hpp"
+#include "material/base_material.hpp"
 #include "vec3.hpp"
 
 #include <memory>

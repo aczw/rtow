@@ -1,8 +1,8 @@
 #include "camera.hpp"
-#include "dielectric_material.hpp"
 #include "hittable_list.hpp"
-#include "lambertian_material.hpp"
-#include "metal_material.hpp"
+#include "material/dielectric_material.hpp"
+#include "material/lambertian_material.hpp"
+#include "material/metal_material.hpp"
 #include "sphere.hpp"
 #include "vec3.hpp"
 

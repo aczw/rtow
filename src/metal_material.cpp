@@ -18,8 +18,8 @@ std::optional<ScatterResult> MetalMaterial::scatter(const Ray& incoming_ray, con
   if (Vec3::dot(reflected_direction, isect_normal) < 0.0) return std::nullopt;
 
   return ScatterResult{
-      .scattered = Ray(isect.get_point(), reflected_direction),
       .attenuation = albedo,
+      .scattered = Ray(isect.get_point(), reflected_direction),
   };
 }
 

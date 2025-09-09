@@ -16,8 +16,8 @@ std::optional<ScatterResult> LambertianMaterial::scatter(const Ray&, const Inter
   }
 
   return ScatterResult{
-      .scattered = Ray(isect.get_point(), scatter_direction),
       .attenuation = albedo,
+      .scattered = Ray(isect.get_point(), scatter_direction),
   };
 }
 

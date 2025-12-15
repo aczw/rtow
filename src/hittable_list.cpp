@@ -26,7 +26,8 @@ std::optional<Intersection> HittableList::hit(const Ray& ray, Interval<> ray_t) 
   double closest = ray_t.get_max();
 
   for (const std::shared_ptr<IHittable>& object : objects) {
-    if (std::optional<Intersection> isect_opt = object->hit(ray, Interval(min, closest)); isect_opt) {
+    if (std::optional<Intersection> isect_opt = object->hit(ray, Interval(min, closest));
+        isect_opt) {
       const Intersection& isect = isect_opt.value();
       result = isect;
       closest = isect.get_t();

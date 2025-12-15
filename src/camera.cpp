@@ -25,12 +25,14 @@ Camera::Camera(double aspect_ratio, int image_width)
       center(),
       pixel_delta_x(viewport_x / this->image_width),
       pixel_delta_y(viewport_y / image_height),
-      viewport_upper_left(center - Vec3(0.0, 0.0, focal_length) - (viewport_x * 0.5) - (viewport_y * 0.5)),
+      viewport_upper_left(center - Vec3(0.0, 0.0, focal_length) - (viewport_x * 0.5) -
+                          (viewport_y * 0.5)),
       first_pixel(viewport_upper_left + 0.5 * (pixel_delta_x + pixel_delta_y)) {}
 
 Ray Camera::construct_ray(int x, int y) const {
   Point3 offset = sample_square();
-  Point3 sample_point = first_pixel + ((x + offset.x()) * pixel_delta_x) + ((y + offset.y()) * pixel_delta_y);
+  Point3 sample_point =
+      first_pixel + ((x + offset.x()) * pixel_delta_x) + ((y + offset.y()) * pixel_delta_y);
 
   // Ray direction is not normalized, which is fine
   return Ray(center, sample_point - center);
@@ -42,7 +44,7 @@ Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world, int bo
 
   // If we've exceeded the maximum number of bounces, then consider this ray hopeless
   if (bounce_number > max_depth) {
-    return constants::black_color;
+    return constants::BLACK_COLOR;
   }
 
   if (std::optional<Intersection> isect_opt = world.hit(ray, interval_to_check); isect_opt) {
@@ -50,20 +52,21 @@ Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world, int bo
     const Intersection& isect = isect_opt.value();
 
     // Use the geometry's material to calculate the next ray and attentuation
-    if (std::optional<ScatterResult> result_opt = isect.get_material()->scatter(ray, isect); result_opt) {
+    if (std::optional<ScatterResult> result_opt = isect.get_material()->scatter(ray, isect);
+        result_opt) {
       const ScatterResult& result = result_opt.value();
       return result.attenuation * calculate_ray_color(result.scattered, world, bounce_number + 1);
     }
 
     // If the ray was not scattered, then it was absorbed by this geometry
-    return constants::black_color;
+    return constants::BLACK_COLOR;
   }
 
   // Else, draw the background (sky)
   Vec3 direction = ray.get_direction().normalized();
   double t = 0.5 * (direction.y() + 1.0);
 
-  return lerp(constants::white_color, Color(0.5, 0.7, 1.0), t);
+  return lerp(constants::WHITE_COLOR, Color(0.5, 0.7, 1.0), t);
 }
 
 void Camera::render(const IHittable& world) {
@@ -84,7 +87,8 @@ void Camera::render(const IHittable& world) {
     }
   }
 
-  std::clog << std::format("\rFinished processing image with resolution {}x{}.\n", image_width, image_height);
+  std::clog << std::format("\rFinished processing image with resolution {}x{}.\n", image_width,
+                           image_height);
 }
 
 }  // namespace rtow

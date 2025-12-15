@@ -19,14 +19,18 @@ class Interval {
   Interval(Real min, Real max) : min(min), max(max) {};
 
   Real get_min() const { return min; }
+
   Real get_max() const { return max; }
 
   bool contains(Real num) const { return min <= num && num <= max; }
+
   bool surrounds(Real num) const { return min < num && num < max; }
 
   Real clamp(Real num) const {
-    if (num < min) return min;
-    if (num > max) return max;
+    if (num < min)
+      return min;
+    if (num > max)
+      return max;
     return num;
   }
 

@@ -4,10 +4,12 @@ namespace rtow {
 
 LambertianMaterial::LambertianMaterial(const Color& albedo) : albedo(albedo) {}
 
-std::optional<ScatterResult> LambertianMaterial::scatter(const Ray&, const Intersection& isect) const {
+std::optional<ScatterResult> LambertianMaterial::scatter(const Ray&,
+                                                         const Intersection& isect) const {
   Vec3 isect_normal = isect.get_normal();
 
-  // Pick a point on the unit sphere that is tangent to the geometry's surface at the intersection point
+  // Pick a point on the unit sphere that is tangent to the geometry's surface at the intersection
+  // point
   Vec3 scatter_direction = isect_normal + Vec3::get_random_unit_vector();
 
   // Catch degenerate scatter direction

@@ -1,4 +1,12 @@
 BasedOnStyle: Chromium
-ColumnLimit: 120
+
+ColumnLimit: 100
 InsertNewlineAtEOF: true
-AllowShortIfStatementsOnASingleLine: WithoutElse
+SeparateDefinitionBlocks: Always
+
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '^".*"'
+    Priority: 1
+  - Regex: '^<.*>'
+    Priority: 2

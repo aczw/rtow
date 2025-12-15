@@ -13,8 +13,8 @@ void write_color(std::ostream& out, const Color& pixel_color);
 
 namespace constants {
 
-constexpr Color black_color = Color(0.0, 0.0, 0.0);
-constexpr Color white_color = Color(1.0, 1.0, 1.0);
+constexpr Color BLACK_COLOR = Color(0.0, 0.0, 0.0);
+constexpr Color WHITE_COLOR = Color(1.0, 1.0, 1.0);
 
 }  // namespace constants
 

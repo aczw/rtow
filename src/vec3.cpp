@@ -9,8 +9,8 @@
 
 namespace rtow {
 
-/// The biggest value where multiplication between two of these may underflow to zero due to
-/// finite precision issues.
+/// The biggest value where multiplication between two of these may underflow to zero
+/// due to finite precision issues.
 constexpr double WILL_UNDERFLOW = 1e-160;
 
 double Vec3::x() const {
@@ -82,7 +82,8 @@ double Vec3::dot(const Vec3& v1, const Vec3& v2) {
 }
 
 Vec3 Vec3::cross(const Vec3& v1, const Vec3& v2) {
-  return Vec3(v1.data[1] * v2.data[2] - v1.data[2] * v2.data[1], v1.data[2] * v2.data[0] - v1.data[0] * v2.data[2],
+  return Vec3(v1.data[1] * v2.data[2] - v1.data[2] * v2.data[1],
+              v1.data[2] * v2.data[0] - v1.data[0] * v2.data[2],
               v1.data[0] * v2.data[1] - v1.data[1] * v2.data[0]);
 }
 
@@ -93,7 +94,8 @@ Vec3 Vec3::normalize(const Vec3& v) {
 Vec3 Vec3::reflect_about_normal(const Vec3& vector, const Vec3& normal) {
   assert(approx_equal(normal.length(), 1.0));
 
-  // Find the length of the projection of `vector` on to `normal` and construct a new vector using it
+  // Find the length of the projection of `vector` on to `normal`
+  // and construct a new vector with it
   double length = dot(vector, normal);
   Vec3 b = length * normal;
 
@@ -111,7 +113,8 @@ Vec3 Vec3::refract_about_normal(const Vec3& vector, const Vec3& normal, double e
   // Derived from Snell's Law
   double cos_theta = std::fmin(dot(-vector, normal), 1.0);
   Vec3 refracted_ray_perp = eta_i_over_eta_f * (vector + cos_theta * normal);
-  Vec3 refracted_ray_parallel = -std::sqrt(std::fabs(1.0 - refracted_ray_perp.length_squared())) * normal;
+  Vec3 refracted_ray_parallel =
+      -std::sqrt(std::fabs(1.0 - refracted_ray_perp.length_squared())) * normal;
 
   return refracted_ray_perp + refracted_ray_parallel;
 }
@@ -131,7 +134,8 @@ Vec3 Vec3::get_random_unit_vector() {
 Vec3 Vec3::get_random_on_hemisphere(const Vec3& normal) {
   Vec3 unit_vector = get_random_unit_vector();
 
-  // If dot product is positive, then generated sample is in the hemisphere represented by the normal
+  // If dot product is positive, then generated sample is in the hemisphere
+  // represented by the normal
   if (dot(unit_vector, normal) > 0.0) {
     return unit_vector;
   } else {

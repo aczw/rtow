@@ -14,7 +14,7 @@ class HittableList : public IHittable {
 
  public:
   HittableList() = default;
-  HittableList(std::shared_ptr<IHittable> object);
+  explicit HittableList(std::shared_ptr<IHittable> object);
 
   void clear();
 

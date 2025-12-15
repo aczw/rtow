@@ -9,7 +9,7 @@ namespace rtow {
 /// its own reflectance, also known as albedo.
 class LambertianMaterial : public BaseMaterial {
  public:
-  LambertianMaterial(const Color& albedo);
+  explicit LambertianMaterial(const Color& albedo);
 
   std::optional<ScatterResult> scatter(const Ray& incoming_ray,
                                        const Intersection& isect) const override;

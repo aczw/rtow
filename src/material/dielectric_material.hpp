@@ -6,7 +6,7 @@ namespace rtow {
 
 class DieletricMaterial : public BaseMaterial {
  public:
-  DieletricMaterial(double refraction_index);
+  explicit DieletricMaterial(double refraction_index);
 
   /// This dielectric material always refracts the ray, never reflects it.
   std::optional<ScatterResult> scatter(const Ray& incoming_ray,

@@ -6,7 +6,7 @@ namespace rtow {
 
 class MetalMaterial : public BaseMaterial {
  public:
-  MetalMaterial(const Color& albedo);
+  explicit MetalMaterial(const Color& albedo);
   MetalMaterial(const Color& albedo, double fuzz);
 
   std::optional<ScatterResult> scatter(const Ray& incoming_ray,

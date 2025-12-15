@@ -11,11 +11,11 @@ using Color = Vec3;
 
 void write_color(std::ostream& out, const Color& pixel_color);
 
-namespace constants {
+namespace constants::color {
 
-constexpr Color BLACK_COLOR = Color(0.0, 0.0, 0.0);
-constexpr Color WHITE_COLOR = Color(1.0, 1.0, 1.0);
+constexpr Color BLACK = Color(0.0, 0.0, 0.0);
+constexpr Color WHITE = Color(1.0, 1.0, 1.0);
 
-}  // namespace constants
+}  // namespace constants::color
 
 }  // namespace rtow

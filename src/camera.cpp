@@ -44,7 +44,7 @@ Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world, int bo
 
   // If we've exceeded the maximum number of bounces, then consider this ray hopeless
   if (bounce_number > max_depth) {
-    return constants::BLACK_COLOR;
+    return constants::color::BLACK;
   }
 
   if (std::optional<Intersection> isect_opt = world.hit(ray, interval_to_check); isect_opt) {
@@ -59,14 +59,14 @@ Color Camera::calculate_ray_color(const Ray& ray, const IHittable& world, int bo
     }
 
     // If the ray was not scattered, then it was absorbed by this geometry
-    return constants::BLACK_COLOR;
+    return constants::color::BLACK;
   }
 
   // Else, draw the background (sky)
   Vec3 direction = ray.get_direction().normalized();
   double t = 0.5 * (direction.y() + 1.0);
 
-  return lerp(constants::WHITE_COLOR, Color(0.5, 0.7, 1.0), t);
+  return lerp(constants::color::WHITE, Color(0.5, 0.7, 1.0), t);
 }
 
 void Camera::render(const IHittable& world) {

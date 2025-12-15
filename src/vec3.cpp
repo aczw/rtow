@@ -45,11 +45,11 @@ Vec3 Vec3::operator-() const {
   return Vec3(-data[0], -data[1], -data[2]);
 }
 
-double Vec3::operator[](int index) const {
+double Vec3::operator[](size_t index) const {
   return data[index];
 }
 
-double& Vec3::operator[](int index) {
+double& Vec3::operator[](size_t index) {
   return data[index];
 }
 

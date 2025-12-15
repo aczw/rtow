@@ -1,8 +1,8 @@
 #pragma once
 
-#include "color.hpp"
-#include "intersection.hpp"
-#include "ray.hpp"
+#include "../color.hpp"
+#include "../intersection.hpp"
+#include "../ray.hpp"
 
 #include <optional>
 

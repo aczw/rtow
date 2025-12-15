@@ -28,8 +28,8 @@ class Vec3 {
 
   Vec3 operator-() const;
 
-  double operator[](int index) const;
-  double& operator[](int index);
+  double operator[](size_t index) const;
+  double& operator[](size_t index);
 
   Vec3& operator+=(const Vec3& v);
   Vec3& operator-=(const Vec3& v);

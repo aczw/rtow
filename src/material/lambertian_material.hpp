@@ -1,7 +1,7 @@
 #pragma once
 
+#include "../color.hpp"
 #include "base_material.hpp"
-#include "color.hpp"
 
 namespace rtow {
 

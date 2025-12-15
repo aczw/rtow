@@ -16,6 +16,9 @@ class DieletricMaterial : public BaseMaterial {
   /// Either the refractive index in vaccuum or air, or the ratio of the material's
   /// refractive index over the refractive index of the enclosing medium.
   double refraction_index;
+
+  /// Schlick's approximation for the Fresnel reflectance term.
+  static double reflectance(double cosine, double refraction_index);
 };
 
 }  // namespace rtow

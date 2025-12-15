@@ -9,22 +9,24 @@
 #include <memory>
 
 constexpr double ASPECT_RATIO = 16.0 / 9.0;
-constexpr int IMAGE_WIDTH = 500;
-
-using namespace rtow;
+constexpr int IMAGE_WIDTH = 700;
 
 int main() {
+  using namespace rtow;
+
   std::shared_ptr material_ground =
       std::make_shared<const LambertianMaterial>(Color(0.8, 0.8, 0.0));
   std::shared_ptr material_center =
       std::make_shared<const LambertianMaterial>(Color(0.1, 0.2, 0.5));
   std::shared_ptr material_left = std::make_shared<const DieletricMaterial>(1.5);
+  std::shared_ptr material_bubble = std::make_shared<const DieletricMaterial>(1.0 / 1.5);
   std::shared_ptr material_right = std::make_shared<const MetalMaterial>(Color(0.8, 0.6, 0.2), 1.0);
 
   HittableList world;
   world.push_back(std::make_shared<Sphere>(Point3(0.0, -100.5, -1.0), 100.0, material_ground));
   world.push_back(std::make_shared<Sphere>(Point3(0.0, 0.0, -1.2), 0.5, material_center));
   world.push_back(std::make_shared<Sphere>(Point3(-1.0, 0.0, -1.0), 0.5, material_left));
+  world.push_back(std::make_shared<Sphere>(Point3(-1.0, 0.0, -1.0), 0.4, material_bubble));
   world.push_back(std::make_shared<Sphere>(Point3(1.0, 0.0, -1.0), 0.5, material_right));
 
   Camera camera(ASPECT_RATIO, IMAGE_WIDTH);

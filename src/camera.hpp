@@ -16,6 +16,7 @@ class Camera {
   int samples_per_pixel;       ///< Number of random samples for each pixel.
   double pixel_samples_scale;  ///< Color scale factor for a sum of pixel samples.
   double focal_length;         ///< Distance between camera center and viewport.
+  double vertical_fov;
   double viewport_height;
   double viewport_width;
   Vec3 viewport_x;

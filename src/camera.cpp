@@ -6,6 +6,7 @@
 #include "utils.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 
 namespace rtow {
@@ -18,7 +19,8 @@ Camera::Camera(double aspect_ratio, int image_width)
       samples_per_pixel(100),
       pixel_samples_scale(1.0 / samples_per_pixel),
       focal_length(1.0),
-      viewport_height(2.0),
+      vertical_fov(90.0),
+      viewport_height(2.0 * std::tan(to_radians(vertical_fov) * 0.5) * focal_length),
       viewport_width(viewport_height * (static_cast<double>(this->image_width) / image_height)),
       viewport_x(viewport_width, 0.0, 0.0),
       viewport_y(0.0, -viewport_height, 0.0),
